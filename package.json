@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
+    "debug":"nodemon --inspect index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
