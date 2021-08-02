@@ -16,15 +16,15 @@ const checkSchemeId = async (req, res, next) => {
     if (!scheme) {
       next({
         status: 404,
-        message: `scheme with scheme_id ${req.params.id} not found`
+        message: `scheme with scheme_id ${req.params.scheme_id} not found`
       });
     } else {
-      next(res.json(scheme));
+      next();
     }
   } catch (err) {
     next(err);
   }
-}
+};
 
 /*
   If `scheme_name` is missing, empty string or not a string:
@@ -68,8 +68,7 @@ const validateStep = (req, res, next) => {
     !instructions.trim() ||
     typeof step_number !== 'number' ||
     step_number < 1 ) {
-    const error = { status: 400, message: 'invalid step' };
-    next(error);
+    next({ status: 400, message: 'invalid step' });
   } else {
     next();
   }

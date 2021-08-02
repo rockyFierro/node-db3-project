@@ -1,7 +1,7 @@
 // DO NOT CHANGE THIS FILE
-const express = require('express')
+const express = require('express');
 const { checkSchemeId, validateScheme, validateStep } = require('./scheme-middleware');
-const Schemes = require('./scheme-model.js')
+const Schemes = require('./scheme-model.js');
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
       res.json(schemes);
     })
     .catch(next);
-})
+});
 
 /*
   [GET] /api/schemes/2
@@ -53,14 +53,14 @@ router.get('/', (req, res, next) => {
   }
 */
 router.get('/:scheme_id', checkSchemeId, (req, res, next) => {
-  const { scheme_id } = req.params.id;
+  const { scheme_id } = req.params;
 
   Schemes.findById(scheme_id)
     .then(scheme => {
       res.json(scheme);
     })
     .catch(next);
-})
+});
 
 /*
   [GET] /api/schemes/2/steps
@@ -82,14 +82,14 @@ router.get('/:scheme_id', checkSchemeId, (req, res, next) => {
   ]
 */
 router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
-  const { scheme_id } = req.params
+  const { scheme_id } = req.params;
 
   Schemes.findSteps(scheme_id)
     .then(steps => {
-      res.json(steps)
+      res.json(steps);
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
 /*
   [POST] /api/schemes { "scheme_name": "Take Ovah" }
@@ -141,6 +141,7 @@ router.post('/:scheme_id/steps', checkSchemeId, validateStep, (req, res, next) =
 });
 
 router.use((err, req, res, next) => { // eslint-disable-line
+  
   res.status(err.status || 500).json({
     sageAdvice: 'Finding the real error is 90% of the bug fix',
     message: err.message,
