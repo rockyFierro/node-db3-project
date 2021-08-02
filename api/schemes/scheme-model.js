@@ -39,8 +39,8 @@ async function findById(scheme_id) {
     steps: []
   };
 
-  rows.forEach( row => {
-    if(row.step_id) {
+  rows.forEach(row => {
+    if (row.step_id) {
       result.steps.push({
         step_id: row.step_id,
         step_name: row.step_name,
@@ -121,11 +121,23 @@ async function findById(scheme_id) {
   */
 }
 
-function findSteps(scheme_id) { // EXERCISE C
+function findSteps(scheme_id) { 
+  return db('steps as st')
+  .select('step_id', 'step_number', 'instructions','scheme_name')
+  .leftJoin('schemes as sc', 'st.scheme_id', 'sc.scheme_id')
+  .where('sc.scheme_id', scheme_id)
+  .orderBy('step_number');
+  // EXERCISE C
   /*
     1C- Build a query in Knex that returns the following data.
     The steps should be sorted by step_number, and the array
     should be empty if there are no steps for the scheme:
+
+    select st.step_id, st.step_number, st.instructions , scheme_name
+    from steps st
+    join schemes sc
+    on st.scheme_id = sc.scheme_id
+    order by step_number
 
       [
         {
@@ -142,6 +154,8 @@ function findSteps(scheme_id) { // EXERCISE C
         }
       ]
   */
+
+
 }
 
 function add(scheme) { // EXERCISE D
